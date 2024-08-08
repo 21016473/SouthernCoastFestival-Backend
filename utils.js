@@ -42,24 +42,22 @@ class Utils {
         });
     }
     
-
-    uploadFile(file, uploadPath, callback){        
-        // get file extension (.jpg, .png etc)
-        const fileExt = file.name.split('.').pop()
-        // create unique file name  
-        const uniqueFilename = uuidv4() + '.' + fileExt
-        // set upload path (where to store image on server)
-        const uploadPathFull = path.join(uploadPath, uniqueFilename)
-        // console.log(uploadPathFull)
+    uploadFile(file, uploadPath, callback){      
+        if (!file || !file.name) {
+            console.error("Ivalid file object:", file)
+            return callback(null)
+        }
+        
+        const uniqueFilename = `${Date.now()}_${file.name}`
+        const filePath = path.join(uploadPath, uniqueFilename)
+        
         // move image to uploadPath
-        file.mv(uploadPathFull, function(err) {
+        file.mv(filePath, (err) => {
             if(err){
-                console.log(err)
-                return false
+                console.error('File upload error:', err)
+                return callback(null)
             }
-            if(typeof callback == 'function'){
-                callback(uniqueFilename)
-            }
+            callback(uniqueFilename)
         })
     }
 }

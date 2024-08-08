@@ -29,12 +29,12 @@ const eventSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  eventoperationdatetimestart: {
-    type: Date,
+  eventsaturdaytime: {
+    type: String,
     required: true
   },
-  eventoperationdatetimeend: {
-    type: Date,
+  eventsundaytime: {
+    type: String,
     required: true
   },
   eventstallnumber: {
